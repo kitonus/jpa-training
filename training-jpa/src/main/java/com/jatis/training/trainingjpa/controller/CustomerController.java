@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jatis.training.trainingjpa.dto.CustomerBalanceDTO;
 import com.jatis.training.trainingjpa.entity.CustomerEntity;
 import com.jatis.training.trainingjpa.service.CustomerService;
 
@@ -37,5 +38,10 @@ public class CustomerController extends BaseController{
 	public Page<CustomerEntity> listByNamePrefix(@PathVariable("prefix") String prefix,
 			int page) {
 		return custService.getCustomersByName(prefix, page, 10);
+	}
+	
+	@GetMapping("/balance/{custNo}")
+	public CustomerBalanceDTO getBalance(@PathVariable("custNo") String customerNo) {
+		return custService.getTotalBalance(customerNo);
 	}
 }
