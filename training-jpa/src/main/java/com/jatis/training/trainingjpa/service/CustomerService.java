@@ -3,6 +3,7 @@ package com.jatis.training.trainingjpa.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -33,9 +34,15 @@ public class CustomerService {
 		return fromDb;
 	}
 	
-	@Transactional(rollbackFor = Throwable.class)
-	public List<CustomerEntity> getCustomersByName(String prefix, int page, int pageSize) {
+	@Transactional(readOnly = true)
+	public Page<CustomerEntity> getCustomersByName(String prefix, int page, int pageSize) {
 		return customerRepo.findByNameStartingWith(prefix, 
+				PageRequest.of(page, pageSize, Sort.by(Direction.ASC, "name", "custNumber")));
+	}
+	
+	@Transactional(readOnly = true)
+	public Page<CustomerEntity> getAll(int page, int pageSize) {
+		return customerRepo.findAll( 
 				PageRequest.of(page, pageSize, Sort.by(Direction.ASC, "name", "custNumber")));
 	}
 	
