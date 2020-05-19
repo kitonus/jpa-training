@@ -33,11 +33,13 @@ public class CustomerService {
 		return fromDb;
 	}
 	
+	@Transactional(rollbackFor = Throwable.class)
 	public List<CustomerEntity> getCustomersByName(String prefix, int page, int pageSize) {
 		return customerRepo.findByNameStartingWith(prefix, 
 				PageRequest.of(page, pageSize, Sort.by(Direction.ASC, "name", "custNumber")));
 	}
 	
+	@Transactional(readOnly = true)
 	public long countCustomersByName(String prefix) {
 		return customerRepo.countByNameStartingWith(prefix);
 	}
