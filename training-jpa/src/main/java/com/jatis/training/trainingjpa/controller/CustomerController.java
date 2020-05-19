@@ -28,7 +28,7 @@ public class CustomerController extends BaseController{
 		return custService.saveCustomer(customer);
 	}
 	
-	@GetMapping("/list_all/{page}/{pageSize}")
+	@GetMapping({"/list_all/{page}/{pageSize}", "/list_all/{page}"})
 	public Page<CustomerEntity> listAll(@PathVariable("page") int page
 			, @PathVariable(value="pageSize", required = false) Optional<Integer> pageSize) {
 		return custService.getAll(page, pageSize.orElse(10));
