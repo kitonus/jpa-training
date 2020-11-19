@@ -35,6 +35,10 @@ public class CustomerService {
 		if (customer.getBirthDate() != null) {
 			fromDb.setBirthDate(customer.getBirthDate());
 		}
+		if (customer.getBranch() != null) {
+			fromDb.setBranch(customer.getBranch());
+		}
+		//save tidak perlu dipanggil karena object fromDb sudah tersambung ke DB!
 		return fromDb;
 	}
 	

@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,6 +38,9 @@ public class CustomerEntity extends BaseEntity{
 	@NotNull
 	@Past(message="Birth date must be in the past")
 	private Date birthDate;
+	
+	@ManyToOne
+	private BranchEntity branch;
 
 	public String getCustNumber() {
 		return custNumber;
@@ -61,6 +65,13 @@ public class CustomerEntity extends BaseEntity{
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
 	}
-	
-	
+
+	public BranchEntity getBranch() {
+		return branch;
+	}
+
+	public void setBranch(BranchEntity branch) {
+		this.branch = branch;
+	}
+		
 }
