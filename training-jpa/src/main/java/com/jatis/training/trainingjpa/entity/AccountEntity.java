@@ -9,8 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "mst_account")
@@ -18,7 +17,7 @@ public class AccountEntity extends BaseEntity{
 
 	@Id
 	@NotNull
-	@Length(min=5)
+	@Size(max = 8, min = 8)
 	@Column(length = 20)
 	private String accountNo;
 

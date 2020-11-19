@@ -11,9 +11,9 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -24,12 +24,12 @@ public class CustomerEntity extends BaseEntity{
 	
 	@Id
 	@Column(length = 20)
-	@Length(min = 3, max = 20)
+	@Size(min = 3, max = 20)
 	private String custNumber;
 	
 	@NotEmpty
 	@Column(length = 100)
-	@Length(min = 2, max = 100)
+	@Size(min = 2, max = 100)
 	private String name;
 
 	@JsonFormat(pattern="yyyy-MM-dd")
