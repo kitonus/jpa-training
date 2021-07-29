@@ -1,14 +1,17 @@
 spring:
   jpa:
-    database: h2
+#    database: h2
+    database: postgresql
     hibernate:
       ddl-auto: update
     open-in-view: true
     show-sql: true #NOT FOR PRODUCTION
 
   datasource:
-    url: jdbc:h2:~/training-jpa
-    username: training
+#    url: jdbc:h2:~/training-jpa
+    url: jdbc:postgresql://localhost:5432/jpatraining
+    username: jpatraining
+    password: password
 
     hikari:
       maximum-pool-size: 5
