@@ -1,5 +1,7 @@
 package com.jatis.training.trainingjpa.service;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -84,5 +86,16 @@ public class CustomerService {
 	public CustomerBalanceDTO getTotalBalance(String customerNo) {
 		return new CustomerBalanceDTO(customerRepo.findById(customerNo).orElse(null), 
 				accountRepo.totalBalance(customerNo));
+	}
+	
+	@Transactional(rollbackFor = Throwable.class)
+	public int deleteCustomersWithIdsIn(String[] ids) {
+		return customerRepo.deleteByCustomerWithIdIn(ids);
+		
+	}
+	
+	@Transactional(rollbackFor = Throwable.class)	
+	public int updateDateOfBirth(Date dob, String branchId) {
+		return customerRepo.updateDateOfBirth(dob, branchId);
 	}
 }

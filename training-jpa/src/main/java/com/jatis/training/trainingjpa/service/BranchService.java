@@ -34,7 +34,18 @@ public class BranchService {
 	
 	@Transactional(rollbackFor = Throwable.class)
 	public BranchEntity save(BranchEntity branch) {
-		return repo.save(branch);
+		BranchEntity savedBranch = repo.findById(branch.getBranchId()).orElse(null);
+		if (savedBranch != null) {
+			savedBranch.setAddress(branch.getAddress());
+			savedBranch.setName(branch.getName());
+			savedBranch.setUpdatedDateTime(branch.getCreateDateTime());
+			savedBranch.setUpdatedBy(branch.getCreatedBy());
+			
+			//no need to explicitly call repo.save() because savedBranch is already persistent
+			return savedBranch;
+		} else {
+			return repo.save(branch);
+		}
 	}
 	
 	@Transactional(readOnly = true, rollbackFor = Throwable.class)

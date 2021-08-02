@@ -40,8 +40,8 @@ public class CustomerEntity extends BaseEntity{
 	private Date birthDate;
 	
 	@ManyToOne
-	private BranchEntity branch;
-
+	private BranchEntity branch;//parent
+	
 	public String getCustNumber() {
 		return custNumber;
 	}

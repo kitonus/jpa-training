@@ -1,11 +1,15 @@
 package com.jatis.training.trainingjpa.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,5 +47,21 @@ public class CustomerController extends BaseController{
 	@GetMapping("/balance/{custNo}")
 	public CustomerBalanceDTO getBalance(@PathVariable("custNo") String customerNo) {
 		return custService.getTotalBalance(customerNo);
+	}
+	
+	@GetMapping("/count/{namePrefix}")
+	public long countByCustomerNamePrefix(@PathVariable String namePrefix) {
+		return custService.countCustomersByName(namePrefix);
+	}
+	
+	@DeleteMapping
+	public int deleteCustomersWithIdsIn(@RequestBody String[] ids) {
+		return custService.deleteCustomersWithIdsIn(ids);
+	}
+	
+	@PostMapping("/dateOfBirth/{dateStr}/{branchId}")
+	public int updateDateOfBirth(@PathVariable String dateStr,
+			@PathVariable String branchId) throws ParseException {
+		return custService.updateDateOfBirth(new SimpleDateFormat("yyMMdd").parse(dateStr), branchId);
 	}
 }
