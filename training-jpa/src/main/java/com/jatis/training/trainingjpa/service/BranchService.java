@@ -8,13 +8,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jatis.training.trainingjpa.entity.BranchEntity;
 import com.jatis.training.trainingjpa.repository.BranchRepository;
 
-@Service
+@Component
 public class BranchService {
 
 	@Autowired
