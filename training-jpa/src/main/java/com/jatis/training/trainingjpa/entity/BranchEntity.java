@@ -8,7 +8,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "TRA_MST_BRANCH")
+@Table(name = "MST_BRANCH")
 public class BranchEntity extends BaseEntity{
 
 	@Id
