@@ -1,5 +1,7 @@
 package com.jatis.training.trainingjpa.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,5 +48,26 @@ public class ProductController {
 	public Page<ProductEntity> findByNameEndingWith(@PathVariable String name
 			, @PathVariable int page, @PathVariable int pageSize){
 		return service.findByNameEndingWith(name, page, pageSize);
+	}
+	
+	@GetMapping("/bybranch/{branchId}/{page}/{pageSize}")
+	public Page<ProductEntity> findByBranch(@PathVariable String branchId
+			, @PathVariable int page, @PathVariable int pageSize){
+		return service.findByBranch(branchId, page, pageSize);
+	}
+	
+	@GetMapping("/bybranch/{branchId}")
+	public List<ProductEntity> findByBranch(@PathVariable String branchId){
+		return service.findByBranch(branchId);
+	}
+	
+	@PostMapping("/updateexpiration/{code}/{expDate}")
+	public ProductEntity updateExpiration(@PathVariable String code, @PathVariable String expDate) throws ParseException {
+		return service.changeExpiration(code, new SimpleDateFormat("yyMMdd").parse(expDate));
+	}
+	
+	@PostMapping("/setexpiredtoday/{branchId}")
+	public int setExpiredToday(@PathVariable String branchId) {
+		return service.setExpiredToday(branchId);
 	}
 }

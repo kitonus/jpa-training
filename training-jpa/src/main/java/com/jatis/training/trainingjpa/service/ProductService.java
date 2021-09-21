@@ -1,5 +1,6 @@
 package com.jatis.training.trainingjpa.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,16 @@ public class ProductService {
 	private ProductRepository repo;
 	
 	@Transactional(rollbackFor = Throwable.class)
+	public ProductEntity changeExpiration(String code, Date expiration) {
+		ProductEntity saved = repo.findById(code).orElse(null);
+		if (saved == null) {
+			return null;
+		}
+		saved.setExpiration(expiration);
+		return saved;
+	}
+	
+	@Transactional(rollbackFor = Throwable.class)
 	public ProductEntity save(ProductEntity product) {
 		ProductEntity savedProduct = repo.findById(product.getProductCode()).orElse(null);
 		if (savedProduct == null) {
@@ -32,6 +43,9 @@ public class ProductService {
 		}
 		if (product.getExpiration() != null) {
 			savedProduct.setExpiration(product.getExpiration());
+		}
+		if (product.getCreatorBranch() != null  && product.getCreatorBranch().getBranchId() != null) {
+			savedProduct.setCreatorBranch(product.getCreatorBranch());
 		}
 		return repo.save(savedProduct);
 	}
@@ -59,5 +73,22 @@ public class ProductService {
 		Pageable pageable = PageRequest.of(page, pageSize, 
 				Sort.by(Order.desc("expiration"), Order.asc("name")));
 		return repo.findByNameEndingWith(name, pageable);
+	}
+	
+	@Transactional(readOnly = true)
+	public Page<ProductEntity> findByBranch(String branchId, int page, int pageSize){
+		Pageable pageable = PageRequest.of(page, pageSize, 
+				Sort.by(Order.desc("expiration"), Order.asc("name")));
+		return repo.findByBranch(branchId, pageable);
+	}
+
+	@Transactional(readOnly = true)
+	public List<ProductEntity> findByBranch(String branchId){
+		return repo.findByBranch(branchId);
+	}
+	
+	@Transactional(rollbackFor = Throwable.class)
+	public int setExpiredToday(String branchId) {
+		return repo.setExpired(new Date(), branchId);
 	}
 }

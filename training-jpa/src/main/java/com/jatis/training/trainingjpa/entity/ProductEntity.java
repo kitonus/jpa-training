@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,6 +23,9 @@ public class ProductEntity extends BaseEntity{
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date expiration;
+	
+	@ManyToOne
+	private BranchEntity creatorBranch;
 
 	public String getProductCode() {
 		return productCode;
@@ -45,6 +49,14 @@ public class ProductEntity extends BaseEntity{
 
 	public void setExpiration(Date expiration) {
 		this.expiration = expiration;
+	}
+
+	public BranchEntity getCreatorBranch() {
+		return creatorBranch;
+	}
+
+	public void setCreatorBranch(BranchEntity creatorBranch) {
+		this.creatorBranch = creatorBranch;
 	}
 
 }
